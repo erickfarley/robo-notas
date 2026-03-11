@@ -1,0 +1,49 @@
+{
+  "scheduler": {
+    "enabled": false,
+    "recurring": true,
+    "date": "2026-04-02",
+    "time": "11:00",
+    "next_run": ""
+  },
+  "downloads_dir": "C:\\Users\\SEU_USUARIO\\Downloads\\Nota Manaus",
+  "close_browser_after": false,
+  "headless": false,
+  "manual_login": false,
+  "manual_login_timeout_sec": 900,
+  "credentials": {
+    "username": "SEU_LOGIN",
+    "password": "SUA_SENHA"
+  },
+  "openrouter": {
+    "api_key": "",
+    "model": "openai/gpt-4o-mini",
+    "timeout": 30,
+    "models": [
+      "openai/gpt-4o-mini"
+    ]
+  },
+  "parallel_workers": 3,
+  "worker_restart_limit": 2,
+  "force_parallel": false,
+  "period": {
+    "mes_de": 1,
+    "ano_de": 2026,
+    "mes_ate": 1,
+    "ano_ate": 2026
+  },
+  "flow_steps": {
+    "encerrar_mov_mensal": true,
+    "encerrar_mov_ret_mensal": true,
+    "encerrar_mov_nfse_mensal": true,
+    "enncerrar_mov_mensal_nacioal": true,
+    "encerrar_mov_ret_mensal_nacional": true,
+    "baixar_notas_emitidas": true,
+    "baixar_notas_recebidas": true,
+    "abrir_emissao_guias": true,
+    "baixar_relatorio_nota_nacional_recebidas": true,
+    "baixar_relatorio_nota_nacional_recebidas_intermediario": true,
+    "baixar_relatorio_nota_nacional_emetidas": true,
+    "baixar_extrato_issqn": true
+  }
+}

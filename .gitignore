@@ -1,0 +1,37 @@
+# Python cache / bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+
+# Build artifacts
+build/
+dist/
+
+# Runtime outputs
+downloads/
+data/empresas_liberadas.csv
+data/empresas_liberadas.json
+data/parallel_runs/
+data/reports/
+debug_*.png
+livro_fiscal*.png
+
+# Local binaries / cache
+playwright-browsers/
+
+# Local archives
+*.rar
+
+# Local config with credentials/secrets
+config.json
+
+# Local input files
+ClientesAProcessar.xlsx

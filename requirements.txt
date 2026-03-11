@@ -1,0 +1,16 @@
+# Dados e planilhas
+pandas>=2.1.0
+openpyxl>=3.1.2
+
+# Automacao web
+playwright>=1.40.0
+requests>=2.31.0
+
+# Processamento de imagens
+Pillow>=10.0.0
+pytesseract>=0.3.10
+fastapi>=0.110.0
+uvicorn>=0.27.0
+
+# Utilitarios
+python-dateutil>=2.8.2

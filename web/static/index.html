@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Nota Manaus RPA</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="topbar">
+        <div class="brand">
+          <div class="logo">NM</div>
+          <div class="brand-text">
+            <div class="brand-title">Nota Manaus RPA</div>
+            <div class="brand-sub">Portal NFSe</div>
+          </div>
+        </div>
+        <div class="status-pill" id="conn-pill">Conexao ativa</div>
+      </header>
+
+      <nav class="tabs">
+        <button class="tab active" data-tab="inicio">Iniciar</button>
+        <button class="tab" data-tab="config">Configuracoes</button>
+      </nav>
+
+      <main>
+        <section id="inicio" class="tab-panel active">
+          <div class="hero">
+            <h1>Robo Nota Manaus</h1>
+            <p>Controle total da execucao com visual limpo e informacoes claras.</p>
+          </div>
+
+          <div class="cards">
+            <div class="card">
+              <div class="card-label">Empresas no sistema</div>
+              <div class="card-value" id="stat-total">0</div>
+            </div>
+            <div class="card">
+              <div class="card-label">Processadas</div>
+              <div class="card-value" id="stat-processed">0</div>
+            </div>
+            <div class="card">
+              <div class="card-label">Erros</div>
+              <div class="card-value" id="stat-errors">0</div>
+            </div>
+            <div class="card">
+              <div class="card-label">Aguardando execucao</div>
+              <div class="card-value" id="stat-waiting">0</div>
+            </div>
+            <div class="card">
+              <div class="card-label">Selecionadas</div>
+              <div class="card-value" id="stat-selected">0</div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <h2>Painel de Controle</h2>
+              <span class="pill" id="run-pill">Aguardando</span>
+            </div>
+            <div class="meta-row">
+              <div class="meta-card">
+                <span class="meta-label">Navegador</span>
+                <span class="meta-value" id="browser-state">Fechado</span>
+              </div>
+              <div class="meta-card">
+                <span class="meta-label">Ultima execucao</span>
+                <span class="meta-value" id="last-run">-</span>
+              </div>
+              <div class="meta-card">
+                <span class="meta-label">Resultado</span>
+                <span class="meta-value" id="last-result">-</span>
+              </div>
+            </div>
+
+            <div class="period-grid">
+              <div class="field">
+                <label>De</label>
+                <div class="row">
+                  <select id="mes-de"></select>
+                  <select id="ano-de"></select>
+                </div>
+              </div>
+              <div class="field">
+                <label>Ate</label>
+                <div class="row">
+                  <select id="mes-ate"></select>
+                  <select id="ano-ate"></select>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-block">
+              <div class="block-head">Etapas do Robo</div>
+              <div class="hint">Escolha quais etapas o robo deve executar para cada empresa.</div>
+              <div class="row flow-actions">
+                <button id="btn-flow-all" class="btn light" type="button">Marcar todas</button>
+                <button id="btn-flow-none" class="btn light" type="button">Desmarcar todas</button>
+              </div>
+              <div id="flow-groups" class="flow-groups"></div>
+            </div>
+
+            <div class="actions">
+              <div class="btn-row">
+                <button id="btn-start" class="btn primary">Iniciar</button>
+                <button id="btn-stop" class="btn warn">Parar</button>
+                <button id="btn-close" class="btn danger">Fechar navegador</button>
+              </div>
+              <div class="inline-status">
+                <span id="run-status">Status: parado</span>
+                <span id="timer">Tempo: 00:00:00</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel log-panel">
+            <div class="panel-head">
+              <h2>Log de Execucao</h2>
+              <select id="log-filter">
+                <option>Todos</option>
+                <option>Sucessos</option>
+                <option>Avisos</option>
+                <option>Erros</option>
+              </select>
+            </div>
+            <div id="log-box" class="log-box"></div>
+          </div>
+        </section>
+
+        <section id="config" class="tab-panel">
+          <div class="section-title">Configuracoes do Robo</div>
+
+          <div class="grid-2">
+            <div class="card-block">
+              <div class="block-head">Downloads</div>
+              <div class="field">
+                <label>Pasta de downloads</label>
+                <input id="cfg-downloads" type="text" placeholder="C:\\Downloads" />
+                <div class="hint">Informe o caminho no servidor onde o robo salva os arquivos.</div>
+                <div class="row" style="margin-top: 8px;">
+                  <button id="btn-export-downloads" class="btn light" type="button">Baixar downloads para este computador</button>
+                </div>
+                <div class="hint">No acesso remoto, use o botao acima para salvar no seu proprio computador.</div>
+              </div>
+            </div>
+
+            <div class="card-block">
+              <div class="block-head">Execucao</div>
+              <label class="checkbox">
+                <input id="cfg-close-after" type="checkbox" />
+                Fechar navegador automaticamente ao concluir
+              </label>
+              <label class="checkbox">
+                <input id="cfg-headless" type="checkbox" />
+                Executar em modo headless (sem janela)
+              </label>
+              <label class="checkbox">
+                <input id="cfg-manual-login" type="checkbox" />
+                Login manual (desative para login automatico)
+              </label>
+            </div>
+
+            <div class="card-block">
+              <div class="block-head">Credenciais</div>
+              <div class="field">
+                <label>Usuario</label>
+                <input id="cfg-user" type="text" />
+              </div>
+              <div class="field">
+                <label>Senha</label>
+                <div class="row">
+                  <input id="cfg-pass" type="password" />
+                  <button id="btn-toggle-pass" class="btn light">Mostrar</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-block">
+              <div class="block-head">Agendamento de Execucao</div>
+              <div class="hint" id="sched-next">Proxima execucao: -</div>
+              <div class="field">
+                <label>Dia da execucao</label>
+                <input id="sched-date" type="date" />
+              </div>
+              <div class="field">
+                <label>Horario</label>
+                <input id="sched-time" type="time" />
+              </div>
+              <div class="row">
+                <label class="checkbox">
+                  <input id="sched-rec" type="checkbox" />
+                  Recorrente (todo mes)
+                </label>
+                <label class="checkbox">
+                  <input id="sched-enabled" type="checkbox" />
+                  Habilitar agendamento
+                </label>
+              </div>
+              <div class="row">
+                <button id="btn-sched-save" class="btn primary ghost">Agendar</button>
+                <button id="btn-sched-cancel" class="btn light">Cancelar</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="center-actions">
+            <button id="btn-save-config" class="btn primary">Salvar configuracoes</button>
+          </div>
+
+          <div class="card-block">
+            <div class="block-head toolbar">
+              <div>
+                <h2>Empresas</h2>
+                <div class="hint" id="empresas-status">Nenhuma empresa carregada.</div>
+              </div>
+              <div class="toolbar-actions">
+                <button id="btn-load-emp" class="btn light">Carregar empresas (Liberado)</button>
+                <button id="btn-mark-all" class="btn light">Marcar todas</button>
+                <button id="btn-unmark-all" class="btn light">Desmarcar todas</button>
+              </div>
+            </div>
+
+            <div class="toolbar search-row">
+              <input id="emp-search" type="text" placeholder="Pesquisar empresa ou CNPJ" />
+              <button id="btn-clear-search" class="btn light">Limpar</button>
+            </div>
+
+            <div class="table-wrap">
+              <table id="emp-table">
+                <thead id="emp-head"></thead>
+                <tbody id="emp-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>
